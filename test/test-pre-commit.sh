@@ -30,6 +30,12 @@ declare -a COMMIT_MESSAGES=( \
   '456: Test message 1' \
 )
 
-# TODO: Stage a file that gets linted
+# Test Setup
+touch staged-file-that-matches-rule.ts
+git add staged-file-that-matches-rule.ts
 
 run_test_cases "${COMMIT_MESSAGES[@]}"
+
+# Test Cleanup
+git restore --staged staged-file-that-matches-rule.ts
+rm staged-file-that-matches-rule.ts

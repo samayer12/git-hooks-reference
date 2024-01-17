@@ -6,4 +6,4 @@ NOCOLOR='\033[0m'
 
 echo "${GREEN}---------------------PRE-COMMIT---------------------${NOCOLOR}"
 
-yarn lint-staged --verbose
+yarn lint-staged --verbose --config .lintstagedrc.json
