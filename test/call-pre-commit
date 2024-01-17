@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source ../scripts/parse-arguments.sh > test-pre-commit.txt
+
+../hooks/pre-commit test/test-pre-commit.txt

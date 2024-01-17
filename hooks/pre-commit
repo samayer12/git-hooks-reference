@@ -6,4 +6,4 @@ NOCOLOR='\033[0m'
 
 echo "${GREEN}---------------------PRE-COMMIT---------------------${NOCOLOR}"
 
-yarn --cwd frontend lint-staged --verbose
+yarn lint-staged --verbose
