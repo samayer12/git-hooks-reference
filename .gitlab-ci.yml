@@ -1,0 +1,20 @@
+image: busybox:latest
+
+stages:
+  - test
+
+before_script:
+  - echo "Before script section"
+
+after_script:
+  - echo "After script section"
+
+test:
+  stage: test
+  tags:
+    - gitlab-runner
+  script:
+    - ./test/run-all-tests.sh
+  artifacts:
+    paths:
+      - 'test/logs/*.log'
