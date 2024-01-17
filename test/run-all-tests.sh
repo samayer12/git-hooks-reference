@@ -18,8 +18,13 @@ done
 
 PASS_COUNT=$(grep -o -i "PASS" test-report.log | wc -l)
 FAIL_COUNT=$(grep -o -i "FAIL" test-report.log | wc -l)
-printf "INFO - Tests complete, %d passed and %d failed. See logs for details." \
+printf "INFO - Tests complete, %d passed and %d failed.\n" \
        "$PASS_COUNT" \
        "$FAIL_COUNT"
 
-[[ $FAIL_COUNT -gt $FAILURE_THRESHOLD ]] &&  exit 1
+if [[ $FAIL_COUNT -gt $FAILURE_THRESHOLD ]]; then
+  printf "ERROR - Failure Threshold of %d failing tests broken, there are too many failing tests. Check logs.\n" "$FAILURE_THRESHOLD"
+  exit 1
+else
+  exit 0
+fi
