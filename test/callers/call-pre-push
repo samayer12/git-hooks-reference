@@ -2,4 +2,26 @@
 
 source ../scripts/parse-arguments.sh > test-pre-push.txt
 
+CURRENT_SHA="$(git rev-parse HEAD)"
+touch ../test/index.ts # A dummy frontend file
+touch ../test/main.java # A dummy backend file
+git add ../test/main.java ../test/index.ts
+#git commit -m "123123123: A change to backend and frontend" # Need to automate the 'y' prompt or branch appropriately
+# Cannot just branch without also pushing and then deleting that branch because of rev-parse with origin/HEAD
+
+expect << EOF
+spawn bash git commit -m "123123123: A change to backend and frontend" # Need to automate the 'y' prompt or branch appropriately
+
+expect {
+  "INFO - Commit anyway?" {send "y\r";interact}
+}
+EOF
+
 ../hooks/pre-push
+
+git reset "$CURRENT_SHA"
+rm ../test/main.java ../test/index.ts
+
+[[ $CURRENT_SHA -eq $(git rev-parse HEAD) ]]; \
+  (echo "INFO - Commit SHA reset success."; exit 0) || \
+  (echo "ERROR - Commit SHA mismatch after running pre-push tests."; exit 1)
