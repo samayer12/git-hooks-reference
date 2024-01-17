@@ -34,7 +34,7 @@ handleInputMismatch(){
 
 ISSUE_ID_FORMAT="^([0-9]{9})$" # Pivotal Tracker Issue IDs are 9-digits
 
-log_message "INFORMATIONAL" "-----------------PREPARE-COMMIT-MSG-----------------"
+log_message "INFO" "Starting PREPARE-COMMIT-MSG hook."
 if git symbolic-ref --short HEAD 1>/dev/null 2>&1; then
   BRANCH_NAME="$(git symbolic-ref --short HEAD)"
 else
@@ -51,8 +51,8 @@ if ! doesInputMatchIssueFormat "$EXTRACTED_ISSUE_ID" "$ISSUE_ID_FORMAT"; then
 fi
 
 if doesInputMatchIssueFormat "$CURRENT_COMMIT_MESSAGE" "$ISSUE_ID_FORMAT"; then
-  log_message "WARNING" "Issue number already present in commit message. Detected '$CURRENT_COMMIT_MESSAGE'."
-  log_message "INFORMATIONAL" "Skipping auto-prepend."
+  log_message "WARN" "Issue number already present in commit message. Detected '$CURRENT_COMMIT_MESSAGE'."
+  log_message "INFO" "Skipping auto-prepend."
   printIssueURL "$@"
   exit 0
 elif [ -z "$CURRENT_COMMIT_MESSAGE" ]; then

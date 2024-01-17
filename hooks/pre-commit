@@ -3,6 +3,6 @@
 . "$(dirname "$0")/utilities/log-message.sh"
 
 . "$(dirname -- "$0")/_/husky.sh"
-log_message "INFORMATIONAL" "---------------------PRE-COMMIT---------------------"
+log_message "INFO" "Starting PRE-COMMIT hook."
 
 yarn lint-staged --verbose --config .lintstagedrc.json

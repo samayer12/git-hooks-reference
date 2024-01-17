@@ -90,7 +90,7 @@ run_test_cases(){
       fi
     fi
 
-    log_message "INFORMATIONAL" "$(printf "%s - CASE %d - %s - Input: '%s'\n" "$HOOK_NAME" "$COUNT" "$RESULT" "$TEST_CASE")" 2>&1 | tee -a logs/test-report.log
+    log_message "INFO" "$(printf "%s - CASE %d - %s - Input: '%s'\n" "$HOOK_NAME" "$COUNT" "$RESULT" "$TEST_CASE")" 2>&1 | tee -a logs/test-report.log
     COUNT=$((COUNT+1))
   done < "$TEST_CASES"
 

@@ -10,28 +10,28 @@ exec < /dev/tty
 FRONTEND_DIRECTORY="test" # TODO - Make this your real frontend directory
 BACKEND_DIRECTORY="test" # TODO - Make this your real backend directory
 
-log_message "INFORMATIONAL" "----------------------PRE-PUSH----------------------"
+log_message "INFO" "Starting PRE-PUSH hook."
 
 REMOTE_SHA=$(git rev-parse origin/HEAD)
 
 if [ "$(git symbolic-ref HEAD)" = "refs/heads/main" ]; then
   pwd
   frontend_files_changed=$(git diff --name-only "$REMOTE_SHA" HEAD | grep -e ^"$FRONTEND_DIRECTORY" | wc -l)
-  log_message "INFORMATIONAL" "Frontend file delta: $frontend_files_changed"
+  log_message "INFO" "Frontend file delta: $frontend_files_changed"
   backend_files_changed=$(git diff --name-only "$REMOTE_SHA" HEAD | grep -e ^"$BACKEND_DIRECTORY" -e build.gradle | wc -l)
-  log_message "INFORMATIONAL" "Backend file delta: $backend_files_changed"
+  log_message "INFO" "Backend file delta: $backend_files_changed"
 
   if [ "$frontend_files_changed" -gt 0 ]; then
-    log_message "INFORMATIONAL" "Running frontend tests."
+    log_message "INFO" "Running frontend tests."
     log_message "ERROR" "Put your frontend test logic here. (e.g., 'CI=true yarn test')"
-    log_message "INFORMATIONAL" "Running frontend build."
+    log_message "INFO" "Running frontend build."
     log_message "ERROR" "Put your frontend build logic here. (e.g., 'yarn build')"
   else
-    log_message "WARNING" "No changes made to frontend - SKIPPING TESTS"
+    log_message "WARN" "No changes made to frontend - SKIPPING TESTS"
   fi
 
   if [ "$backend_files_changed" -gt 0 ]; then
-    log_message "INFORMATIONAL" "Running backend tests."
+    log_message "INFO" "Running backend tests."
     log_message "ERROR" "Put your backend test logic here. (e.g., 'CI=true ./gradlew test)"
   else
     log_message "ERROR" "No changes made to backend - SKIPPING TESTS"

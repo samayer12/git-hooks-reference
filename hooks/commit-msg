@@ -4,6 +4,6 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-log_message "INFORMATIONAL" "-----------------------COMMIT-----------------------"
+log_message "INFO" "Starting COMMIT hook."
 
 npx --no-install commitlint --edit "$1"
