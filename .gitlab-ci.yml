@@ -15,6 +15,7 @@ test:
   tags:
     - gitlab-runner
   script:
+    - yarn install
     - cd test
     - ./run-all-tests.sh
   artifacts:
