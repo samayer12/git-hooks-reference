@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source ../scripts/parse-arguments.sh > test-commit-msg.txt
+
+../hooks/commit-msg test/test-commit-msg.txt

@@ -4,7 +4,6 @@
 verbose_mode=false
 output_file=""
 input_string=""
-mode=""
 
 # Function to display script usage
 usage() {
@@ -12,7 +11,6 @@ usage() {
   echo "Options:"
   echo " -h, --help      Display this help message"
   echo " -v, --verbose   Enable verbose mode"
-  echo " -m, --mode      Enable test or prod mode"
   echo " -i, --input     Specify input to this script"
   echo " -f, --file      FILE Specify an output file"
 }
@@ -35,10 +33,6 @@ handle_options() {
         ;;
       -v | --verbose)
         verbose_mode=true
-        ;;
-      -m | --mode)
-        mode=$(extract_argument "$@")
-        shift
         ;;
       -i | --input)
         input_string=$(extract_argument "$@")
@@ -79,16 +73,4 @@ if [ -n "$output_file" ]; then
  echo "Output file specified: $output_file"
 fi
 
-#######################
-# Main script execution
-#######################
-
-. "$(dirname "$0")/../hooks/_/husky.sh"
-
-GREEN='\033[0;32m'
-NOCOLOR='\033[0m'
-
-echo "${GREEN}-----------------------COMMIT-----------------------${NOCOLOR}"
-echo "Run a linter here"
-echo "The input was: $input_string"
-#npx --no-install commitlint --edit "$input_string"
+echo "$input_string"
