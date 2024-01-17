@@ -12,10 +12,6 @@ We can test some of these scripts with bash.
 Execute this file from the `test/` directory.
 Otherwise, run the appropriate `test/test-*.sh` file for the hook you're working with.
 
-If you want ANSI color highlighting while viewing a `.log` file from IntelliJ, try the [ANSI Highlighter Premium](https://plugins.jetbrains.com/plugin/9707-ansi-highlighter-premium) plugin.
-This is a paid plugin with a trial period.
-Restart your IDE after installation if you choose to try it out.
-
 ## Description
 
 This project uses a set of test-fixtures to let you test changes to your git hooks with confidence.
@@ -41,9 +37,13 @@ Run `yarn install` to install hooks.
 Attempt to commit, and see how the git hooks execute.
 You can update the test cases and hook implementation details to suit your team norms.
 
+If you want ANSI color highlighting while viewing a `.log` file from IntelliJ, try the [ANSI Highlighter Premium](https://plugins.jetbrains.com/plugin/9707-ansi-highlighter-premium) plugin.
+This is a paid plugin with a trial period.
+Restart your IDE after installation if you choose to try it out.
+
 ## Support
 
-Open an issue on GitHub.
+Open an issue on GitHub or message me on Slack.
 
 ## Roadmap
 
@@ -55,4 +55,5 @@ Contributions welcome, just open up a MR and explain what your contributions do 
 
 Change your hook implementations in `hooks/` to suit your needs.
 Update test cases in `test/input/`.
+
 Unless you want to change logging options, it is unlikely that you'll need to modify `test/callers/`, `test/test-*.sh` or `run-*.sh`.
