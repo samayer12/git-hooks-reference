@@ -21,7 +21,7 @@ test:
   tags:
     - gitlab-runner
   script:
-    - git -v
+    - git --version
     - yarn install
     - cd test
     - ./run-all-tests.sh
