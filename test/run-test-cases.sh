@@ -73,7 +73,7 @@ run_test_cases(){
   while read -r TEST_CASE;
   do
     RESULT=''
-    # TODO: Handle "successful failure" cases for testing 'invalid' input
+    # TODO: Handle "successful failure" cases for testing 'invalid' input instead of marking failure as a success
     if $SHOULD_FAIL; then
      # Sad Path
      if ./callers/call-"$HOOK_NAME" -i "$TEST_CASE" > "logs/invalid-$HOOK_NAME-$COUNT-output.log" 2>&1; then

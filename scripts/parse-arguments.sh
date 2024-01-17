@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: Maybe this file can be deprecated
 # Default variable values
 verbose_mode=false
 output_file=""
@@ -58,7 +57,6 @@ handle_options() {
     shift
   done
 };
-
 
 #######################
 # Main script prep

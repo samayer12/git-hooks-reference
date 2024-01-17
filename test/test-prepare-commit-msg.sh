@@ -2,7 +2,6 @@
 
 source ../hooks/utilities/log-message.sh
 
-# TODO: Stage a file that gets linted
 git checkout -b '123456789-test-branch-prepare-commit' 1>/dev/null 2>&1
 log_message "DEBUG" "Current Branch: $(git symbolic-ref --short HEAD)" 1>/dev/null 2>&1
 
