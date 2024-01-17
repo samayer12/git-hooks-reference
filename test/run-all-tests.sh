@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
+yarn install
+
 rm test-report.log # Clear report file between runs
+
+printf "INFO - Starting test suite.\n"
+printf "INFO - Checking for CI environment: %s\n" "$CI"
 
 for TEST_FILE in test-*.sh; do
   bash "$TEST_FILE"
