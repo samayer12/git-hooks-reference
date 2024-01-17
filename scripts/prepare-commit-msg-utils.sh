@@ -11,7 +11,7 @@ updateCommitMessage(){
 
 askUserToContinue(){
   exec < /dev/tty
-  read -p "$(echo "${BLUE}"INFO - Commit anyway? [y/n] "${NOCOLOR}")" -n 1 -r
+  read -p "$(echo "${BLUE}"INFO - Commit anyway? [y/n]"${NOCOLOR}")" -n 1 -r
   echo
   [[ $REPLY =~ ^[Yy]$ ]] && exit 0 || exit 1
 }
