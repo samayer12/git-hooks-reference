@@ -43,7 +43,7 @@ You can update the test cases and hook implementation details to suit your team 
 
 ## Support
 
-Contact Sam Mayer on ASWF slack or open an [issue](https://gitlab.create.army.mil/samuel.a.mayer5.ctr/git-hooks-reference/-/issues).
+Open an issue on GitHub.
 
 ## Roadmap
 
