@@ -5,14 +5,11 @@
 
 . "$(dirname -- "$0")/_/husky.sh"
 
-#exec >/dev/tty 2>&1
 exec < /dev/tty
 
 FRONTEND_DIRECTORY="test" # TODO - Make this your real frontend directory
 BACKEND_DIRECTORY="test" # TODO - Make this your real backend directory
 
-GREEN=$(tput setaf 2)
-NORMAL=$(tput sgr0)
 log_message "INFORMATIONAL" "----------------------PRE-PUSH----------------------"
 
 REMOTE_SHA=$(git rev-parse origin/HEAD)
