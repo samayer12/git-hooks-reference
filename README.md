@@ -3,22 +3,24 @@
 ## Getting started
 
 Git hooks are a great way to standardize team coding habits as part of the git lifecycle.
+As norms evolve over time, you can update the behavior of git hooks using the existing test suite to suit your team's needs.
 
 ## Test and Deploy
 
-We can test some of these scripts with BASH. 
+We can test some of these scripts with bash. 
 `run-all-tests.sh` executes the entire suite.
+Execute this file from the `test/` directory.
 Otherwise, run the appropriate `test/test-*.sh` file for the hook you're working with.
 
 ## Description
 
-This project uses a homebrew set of test-fixtures to let you test changes to your git hooks with confidence.
+This project uses a set of test-fixtures to let you test changes to your git hooks with confidence.
 
 Key files:
 
 * `test/callers/call-*.sh` - A script used to link test fixtures with the implementation found in `hooks/`.
 * `test/input/*.txt` - Text files that provide simulated user input, one test case per line.
-* `test/test-*.sh` - A script that calls `run-test-cases.sh` with argument for the hook under test.
+* `test/test-*.sh` - A script that calls `run-test-cases.sh` with arguments for the hook under test.
 * `scripts/*.sh` - Various helper files used by other scripts.
 * `run-all-tests.sh` - Executes all `test/test-*.sh` files.
 * `run-test-cases.sh` - A generalized loop that processes test cases and logging options for `test/test-*.sh`.
