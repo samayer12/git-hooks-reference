@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-yarn install
-
 rm test-report.log # Clear report file between runs
 
 printf "INFO - Starting test suite.\n"

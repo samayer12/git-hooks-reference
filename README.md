@@ -27,13 +27,15 @@ Key files:
 
 ## Installation
 
-You'll need to replace file paths in the `hooks/` directory with the correct paths for your project.
+Replace file paths in the `hooks/` directory with the correct paths for your project.
 For example, within `pre-push` there is a `FRONTEND_DIRECTORY` and a `BACKEND_DIRECTORY` variable that default to `"test"`.
-
-## Usage
 
 Run `yarn install` to install hooks.
 
+## Usage
+
+Attempt to commit, and see how the git hooks execute.
+You can update the test cases and hook implementation details to suit your team norms.
 
 ## Support
 
@@ -41,7 +43,7 @@ Contact Sam Mayer on ASWF slack or open an [issue](https://gitlab.create.army.mi
 
 ## Roadmap
 
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+* Consider sharing this config across multiple projects with [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 
 ## Contributing
 
@@ -50,7 +52,3 @@ Contributions welcome, just open up a MR and explain what your contributions do 
 Change your hook implementations in `hooks/` to suit your needs.
 Update test cases in `test/input/`.
 Unless you want to change logging options, it is unlikely that you'll need to modify `test/callers/`, `test/test-*.sh` or `run-*.sh`.
-
-## License
-
-For open source projects, say how it is licensed.
