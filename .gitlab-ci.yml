@@ -15,7 +15,8 @@ test:
   tags:
     - gitlab-runner
   script:
-    - ./test/run-all-tests.sh
+    - cd test
+    - ./run-all-tests.sh
   artifacts:
     paths:
       - 'test/logs/*.log'
