@@ -11,6 +11,7 @@ after_script:
 
 test:
   stage: test
+  image: registry.govcloud.futures.army/tac-federal-apple/containers/with-dod-certs/node:16
   tags:
     - gitlab-runner
   script:
