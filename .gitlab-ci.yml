@@ -22,6 +22,8 @@ test:
     - gitlab-runner
   script:
     - git --version
+    - git config user.email "git-hooks-runner@swf.army.mil"
+    - git config user.name "git-hooks-runner"
     - yarn install
     - cd test
     - ./run-all-tests.sh
