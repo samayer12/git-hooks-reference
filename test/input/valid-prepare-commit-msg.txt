@@ -1,0 +1,3 @@
+123456789: Branch name already in message
+456: Invalid issue ID in message
+No issue ID in message

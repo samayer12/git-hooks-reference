@@ -2,9 +2,9 @@
 
 # Default variable values
 COUNT=0
-LOG_DIR=""
-HOOK_NAME=""
-TEST_CASES=""
+LOG_DIR="log-not-set"
+HOOK_NAME="hook-not-set"
+TEST_CASES="test-cases-not-set"
 
 # Function to display script usage
 usage() {
@@ -65,6 +65,7 @@ run_test_cases(){
   while read -r TEST_CASE;
   do
     RESULT=''
+    # TODO: Handle "successful failure" cases for testing 'invalid' input
     if ./callers/call-"$HOOK_NAME" -i "$TEST_CASE" > "logs/$HOOK_NAME-$COUNT-output.log" 2>&1; then
       RESULT='PASS'
     else
@@ -75,7 +76,7 @@ run_test_cases(){
     COUNT=$((COUNT+1))
   done < "$TEST_CASES"
 
-  rm test-*.txt # Remove temporary test files
+  rm test-*.txt* # Remove temporary test files
 }
 
 handle_options "$@"

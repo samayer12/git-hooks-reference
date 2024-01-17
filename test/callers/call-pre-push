@@ -22,6 +22,6 @@ EOF
 git reset "$CURRENT_SHA"
 rm ../test/main.java ../test/index.ts
 
-[[ $CURRENT_SHA -eq $(git rev-parse HEAD) ]]; \
+[[ $CURRENT_SHA == $(git rev-parse HEAD) ]]; \
   (echo "INFO - Commit SHA reset success."; exit 0) || \
   (echo "ERROR - Commit SHA mismatch after running pre-push tests."; exit 1)
