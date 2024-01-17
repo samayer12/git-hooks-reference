@@ -4,12 +4,6 @@ stages:
   - test
 
 before_script:
-  # Uses NPM version 7 key=value, ignore-scripts disables malicious pre and post install scripts
-  - npm config set registry=$NPM_REGISTRY ignore-scripts=true
-  - find . -name yarn.lock -exec sed -i "s#https://registry.yarnpkg.com#${NPM_REGISTRY}#g" {} \;
-  - find . -name yarn.lock -exec sed -i "s#https://registry.npmjs.org#${NPM_REGISTRY}#g" {} \;
-  # Set path to Photon certificates
-  - yarn config set cafile /etc/ssl/certs/ca-certificates.crt
   - yarn install --ignore-scripts
 
 after_script:
@@ -17,12 +11,11 @@ after_script:
 
 test:
   stage: test
-  image: registry.govcloud.futures.army/tac-federal-apple/containers/with-dod-certs/node:16
   tags:
     - gitlab-runner
   script:
     - git --version
-    - git config user.email "git-hooks-runner@swf.army.mil"
+    - git config user.email "git-hooks-runner@some.place"
     - git config user.name "git-hooks-runner"
     - yarn install
     - cd test
