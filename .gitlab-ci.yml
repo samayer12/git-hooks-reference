@@ -4,7 +4,13 @@ stages:
   - test
 
 before_script:
-  - echo "Before script section"
+  # Uses NPM version 7 key=value, ignore-scripts disables malicious pre and post install scripts
+  - npm config set registry=$NPM_REGISTRY ignore-scripts=true
+  - find . -name yarn.lock -exec sed -i "s#https://registry.yarnpkg.com#${NPM_REGISTRY}#g" {} \;
+  - find . -name yarn.lock -exec sed -i "s#https://registry.npmjs.org#${NPM_REGISTRY}#g" {} \;
+  # Set path to Photon certificates
+  - yarn config set cafile /etc/ssl/certs/ca-certificates.crt
+  - yarn install --ignore-scripts
 
 after_script:
   - echo "After script section"
