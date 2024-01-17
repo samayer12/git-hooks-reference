@@ -18,7 +18,7 @@ This project uses a homebrew set of test-fixtures to let you test changes to you
 
 Key files:
 
-* `test/call-*.sh` - A script used to link test fixtures with the implementation found in `hooks/`.
+* `test/callers/call-*.sh` - A script used to link test fixtures with the implementation found in `hooks/`.
 * `test/test-*.sh` - A script that contains test cases for each commit hook under test.
 * `scripts/*.sh` - Various helper files used by other scripts.
 * `run-all-tests.sh` - Executes all `test/test-*.sh` files.

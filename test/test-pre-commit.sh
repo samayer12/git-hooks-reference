@@ -10,7 +10,7 @@ run_test_cases(){
   for TEST_CASE in "${!TEST_CASES[@]}";
   do
     RESULT=''
-    if ./call-pre-commit -i "${TEST_CASES[TEST_CASE]}" > "logs/$LOG_FILE_PREFIX-$COUNT-output.log" 2>&1; then
+    if ./callers/call-pre-commit -i "${TEST_CASES[TEST_CASE]}" > "logs/$LOG_FILE_PREFIX-$COUNT-output.log" 2>&1; then
       RESULT='PASS'
     else
       RESULT='FAIL'
