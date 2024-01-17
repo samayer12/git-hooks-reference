@@ -28,5 +28,6 @@ test:
     - cd test
     - ./run-all-tests.sh
   artifacts:
+    when: always
     paths:
       - 'test/logs/*.log'
