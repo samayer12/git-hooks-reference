@@ -6,6 +6,6 @@ expect << EOF
 spawn bash ../hooks/prepare-commit-msg test-prepare-commit-msg.txt
 
 expect {
-  "INFO - Commit anyway?" {send "y\r";interact}
+  "INFO - Commit anyway?" {send "n\r";interact}
 }
 EOF

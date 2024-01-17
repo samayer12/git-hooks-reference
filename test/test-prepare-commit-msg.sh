@@ -26,10 +26,16 @@ run_test_cases(){
 
 
 declare -a COMMIT_MESSAGES=( \
-  '123: Prepare test message 0' \
-  '456: Prepare test message 1' \
+  '123456789: Branch name already in message' \
+  '456: Invalid issue ID in message' \
+  'No issue ID in message' \
 )
 
 # TODO: Stage a file that gets linted
+git checkout -b '123456789-test-branch-prepare-commit'
+echo "Current Branch: $(git symbolic-ref --short HEAD)"
 
 run_test_cases "${COMMIT_MESSAGES[@]}"
+
+git checkout main
+git branch -D '123456789-test-branch-prepare-commit'
