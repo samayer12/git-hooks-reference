@@ -8,6 +8,5 @@ git add staged-file-that-matches-rule.ts
 ./run-test-cases.sh --directory logs --input "input/pre-commit.txt" --hook-name pre-commit
 
 # Test Cleanup
-git restore --staged staged-file-that-matches-rule.ts
+git reset HEAD staged-file-that-matches-rule.ts
 rm staged-file-that-matches-rule.ts
-
