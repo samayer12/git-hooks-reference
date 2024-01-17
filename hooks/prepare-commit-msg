@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+. "$(dirname "$0")/_/husky.sh"
+source scripts/prepare-commit-msg-utils.sh
+
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NOCOLOR='\033[0m'
+
+ISSUE_ID_FORMAT="^([0-9]{9})$" # Pivotal Tracker Issue IDs are 9-digits
+
+echo "${GREEN}-----------------PREPARE-COMMIT-MSG-----------------${NOCOLOR}"
+if git symbolic-ref --short HEAD 1>/dev/null 2>&1; then
+  BRANCH_NAME="$(git symbolic-ref --short HEAD)"
+else
+  echo "${BLUE}INFO - Could not detect branch name, a rebase is probably in-progress${NOCOLOR}"
+  exit 0
+fi
+
+EXTRACTED_ISSUE_ID=$(echo "$BRANCH_NAME" | cut -d'-' -f1) # Get the first part of the branch name, delimited by '-'
+
+CURRENT_COMMIT_MESSAGE=$(cut -sd':' -f1 < "$1")
+
+if ! doesInputMatchIssueFormat "$EXTRACTED_ISSUE_ID" "$ISSUE_ID_FORMAT"; then
+  handleInputMismatch "$EXTRACTED_ISSUE_ID"
+fi
+
+if doesInputMatchIssueFormat "$CURRENT_COMMIT_MESSAGE" "$ISSUE_ID_FORMAT"; then
+  echo "${YELLOW}WARN - Issue number already present in commit message. Detected '$CURRENT_COMMIT_MESSAGE'.${NOCOLOR}"
+  echo "${BLUE}INFO - Skipping auto-prepend.${NOCOLOR}"
+  printIssueURL "$@"
+  exit 0
+elif [ -z "$CURRENT_COMMIT_MESSAGE" ]; then
+  updateCommitMessage "$@"
+  printIssueURL "$@"
+else
+  handleInputMismatch "$CURRENT_COMMIT_MESSAGE"
+fi

@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+exec >/dev/tty 2>&1
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NOCOLOR='\033[0m'
+echo "${GREEN}----------------------PRE-PUSH----------------------${NOCOLOR}"
+
+while read local_ref local_sha remote_ref remote_sha
+do
+  if [ "$local_ref" = "refs/heads/main" ]; then
+    frontend_files_changed=$(git diff --name-only $remote_sha HEAD | grep -e ^frontend | wc -l)
+    backend_files_changed=$(git diff --name-only $remote_sha HEAD | grep -e ^src -e build.gradle | wc -l)
+    if [ "$frontend_files_changed" -gt 0 ]; then
+      echo "${GREEN}Running frontend tests${NOCOLOR}"
+      CI=true yarn --cwd frontend test
+      echo "${GREEN}Running frontend build${NOCOLOR}"
+      yarn --cwd frontend build
+    else
+      echo "${RED}No changes made to frontend - SKIPPING TESTS${NOCOLOR}"
+    fi
+    if [ "$backend_files_changed" -gt 0 ]; then
+      echo "${GREEN}Running backend tests${NOCOLOR}"
+      CI=true ./gradlew test
+    else
+      echo "${RED}No changes made to backend - SKIPPING TESTS${NOCOLOR}"
+    fi
+  fi
+done
+
+./scripts/run-journey-test.sh

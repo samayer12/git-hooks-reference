@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+. "$(dirname "$0")/_/husky.sh"
+
+GREEN='\033[0;32m'
+NOCOLOR='\033[0m'
+
+echo "${GREEN}-----------------------COMMIT-----------------------${NOCOLOR}"
+
+npx --no-install commitlint --edit "$1"
