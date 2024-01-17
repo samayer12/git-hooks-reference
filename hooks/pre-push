@@ -17,9 +17,9 @@ REMOTE_SHA=$(git rev-parse origin/HEAD)
 if [ "$(git symbolic-ref HEAD)" = "refs/heads/main" ]; then
   pwd
   frontend_files_changed=$(git diff --name-only "$REMOTE_SHA" HEAD | grep -e ^"$FRONTEND_DIRECTORY" | wc -l)
-  printf "INFO - Frontend file delta: %d" "$frontend_files_changed"
+  printf "INFO - Frontend file delta: %d\n" "$frontend_files_changed"
   backend_files_changed=$(git diff --name-only "$REMOTE_SHA" HEAD | grep -e ^"$BACKEND_DIRECTORY" -e build.gradle | wc -l)
-  printf "INFO - Backend file delta: %d" "$frontend_files_changed"
+  printf "INFO - Backend file delta: %d\n" "$frontend_files_changed"
   if [ "$frontend_files_changed" -gt 0 ]; then
     echo "${GREEN}Running frontend tests${NOCOLOR}"
     echo "${RED}ERROR - Put your frontend test logic here. (e.g., 'CI=true yarn test')${RED}"
