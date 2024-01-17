@@ -9,8 +9,9 @@ NORMAL=$(tput sgr0)
 REVERSE=$(tput smso)
 UNDERLINE=$(tput smul)
 
-print_log_message(){
+log_message(){
   SEVERITY=$1
+  MESSAGE=$2
   SEVERITY_COLOR=$NORMAL
   case $SEVERITY in
   EMERGENCY) SEVERITY_COLOR=$RED$REVERSE ;;
@@ -24,7 +25,7 @@ print_log_message(){
   *) SEVERITY_COLOR=$CHGME;;
   esac
 
-  printf "${SEVERITY_COLOR}$SEVERITY - %s${NORMAL}\n" "The log message"
+  printf "${SEVERITY_COLOR}%s - %s${NORMAL}\n" "$SEVERITY" "$MESSAGE"
 }
 
 # Other possible colors

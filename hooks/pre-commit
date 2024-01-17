@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-GREEN='\033[0;32m'
-NOCOLOR='\033[0m'
+GREEN=$(tput setaf 2)
+NORMAL=$(tput sgr0)
 
-echo "${GREEN}---------------------PRE-COMMIT---------------------${NOCOLOR}"
+echo "${GREEN}---------------------PRE-COMMIT---------------------${NORMAL}"
 
 yarn lint-staged --verbose --config .lintstagedrc.json

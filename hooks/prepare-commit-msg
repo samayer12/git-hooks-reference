@@ -1,10 +1,39 @@
 #!/usr/bin/env bash
 
-. "$(dirname "$0")/_/husky.sh"
-RED='\033[0;31m'
+# This could be a call to `source log-message.sh`... should it?
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+LIME_YELLOW=$(tput setaf 190)
+BLUE=$(tput setaf 4)
+BRIGHT=$(tput bold)
+NORMAL=$(tput sgr0)
+REVERSE=$(tput smso)
+UNDERLINE=$(tput smul)
+
+log_message(){
+  SEVERITY=$1
+  MESSAGE=$2
+  SEVERITY_COLOR=$NORMAL
+  case $SEVERITY in
+  EMERGENCY) SEVERITY_COLOR=$RED$REVERSE ;;
+  ALERT) SEVERITY_COLOR=$RED$UNDERLINE ;;
+  CRITICAL) SEVERITY_COLOR=$RED$BRIGHT ;;
+  ERROR) SEVERITY_COLOR=$RED ;;
+  WARNING) SEVERITY_COLOR=$YELLOW ;;
+  NOTICE) SEVERITY_COLOR=$LIME_YELLOW ;;
+  INFORMATIONAL) SEVERITY_COLOR=$GREEN ;;
+  DEBUG) SEVERITY_COLOR=$BLUE ;;
+  *) SEVERITY_COLOR=$CHGME;;
+  esac
+
+  printf "${SEVERITY_COLOR}%s - %s${NORMAL}\n" "$SEVERITY" "$MESSAGE"
+}
+
+source "$(dirname "$0")/_/husky.sh"
 
 updateCommitMessage(){
-  echo "${BLUE}INFO - Prepending issue number to commit message.${NOCOLOR}"
+  log_message "DEBUG" "Prepending issue number to commit message."
   if [ -n "$BRANCH_NAME" ]; then
   sed -i.bak -e "1s/^/$EXTRACTED_ISSUE_ID: /" "$1" # Prepend trimmed branch ID to the commit message
   fi
@@ -12,13 +41,13 @@ updateCommitMessage(){
 
 askUserToContinue(){
   exec < /dev/tty
-  read -p "$(echo "${BLUE}"INFO - Commit anyway? [y/n]"${NOCOLOR}")" -n 1 -r
+  read -p "$(log_message "NOTICE" "Commit anyway? [y/n]")" -n 1 -r
   echo
   [[ $REPLY =~ ^[Yy]$ ]] && exit 0 || exit 1
 }
 
 printIssueURL(){
-  echo "${BLUE}INFO - View on Pivotal Tracker: https://www.pivotaltracker.com/story/show/$EXTRACTED_ISSUE_ID${NOCOLOR}"
+  log_message "NOTICE" "View on Pivotal Tracker: https://www.pivotaltracker.com/story/show/$EXTRACTED_ISSUE_ID"
 }
 
 doesInputMatchIssueFormat(){
@@ -26,23 +55,18 @@ doesInputMatchIssueFormat(){
 }
 
 handleInputMismatch(){
-  echo "${RED}ERROR - Could not detect issue number from filtered input of '$1'${NOCOLOR}"
-  echo "${RED}ERROR - Branch name did not match regular expression $ISSUE_ID_FORMAT${NOCOLOR}"
+  log_message "ERROR" "Could not detect issue number from filtered input of '$1'"
+  log_message "ERROR" "Branch name did not match regular expression $ISSUE_ID_FORMAT"
   askUserToContinue "$@"
 }
 
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-BLUE='\033[0;34m'
-NOCOLOR='\033[0m'
-
 ISSUE_ID_FORMAT="^([0-9]{9})$" # Pivotal Tracker Issue IDs are 9-digits
 
-echo "${GREEN}-----------------PREPARE-COMMIT-MSG-----------------${NOCOLOR}"
+log_message "INFORMATIONAL" "-----------------PREPARE-COMMIT-MSG-----------------"
 if git symbolic-ref --short HEAD 1>/dev/null 2>&1; then
   BRANCH_NAME="$(git symbolic-ref --short HEAD)"
 else
-  echo "${BLUE}INFO - Could not detect branch name, a rebase is probably in-progress${NOCOLOR}"
+  log_message "DEBUG" "Could not detect branch name, a rebase is probably in-progress."
   exit 0
 fi
 
@@ -55,8 +79,8 @@ if ! doesInputMatchIssueFormat "$EXTRACTED_ISSUE_ID" "$ISSUE_ID_FORMAT"; then
 fi
 
 if doesInputMatchIssueFormat "$CURRENT_COMMIT_MESSAGE" "$ISSUE_ID_FORMAT"; then
-  echo "${YELLOW}WARN - Issue number already present in commit message. Detected '$CURRENT_COMMIT_MESSAGE'.${NOCOLOR}"
-  echo "${BLUE}INFO - Skipping auto-prepend.${NOCOLOR}"
+  log_message "WARNING" "Issue number already present in commit message. Detected '$CURRENT_COMMIT_MESSAGE'."
+  log_message "INFORMATIONAL" "Skipping auto-prepend."
   printIssueURL "$@"
   exit 0
 elif [ -z "$CURRENT_COMMIT_MESSAGE" ]; then

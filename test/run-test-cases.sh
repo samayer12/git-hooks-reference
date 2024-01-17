@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source ../scripts/log-message.sh
+
 # Default variable values
 COUNT=0
 LOG_DIR="log-not-set"
@@ -88,7 +90,7 @@ run_test_cases(){
       fi
     fi
 
-    printf "INFO - %s - CASE %d - %s - Input: '%s'\n" "$HOOK_NAME" "$COUNT" "$RESULT" "$TEST_CASE" 2>&1 | tee -a test-report.log
+    log_message "INFORMATIONAL" "$(printf "%s - CASE %d - %s - Input: '%s'\n" "$HOOK_NAME" "$COUNT" "$RESULT" "$TEST_CASE")" 2>&1 | tee -a test-report.log
     COUNT=$((COUNT+1))
   done < "$TEST_CASES"
 

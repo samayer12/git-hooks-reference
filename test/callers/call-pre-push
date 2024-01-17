@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+source ../scripts/log-message.sh
 source ../scripts/parse-arguments.sh > test-pre-push.txt
 
 CURRENT_SHA="$(git rev-parse HEAD)"
@@ -23,5 +24,5 @@ git reset "$CURRENT_SHA"
 rm ../test/main.java ../test/index.ts
 
 [[ $CURRENT_SHA == $(git rev-parse HEAD) ]]; \
-  (echo "INFO - Commit SHA reset success."; exit 0) || \
-  (echo "ERROR - Commit SHA mismatch after running pre-push tests."; exit 1)
+  (log_message "DEBUG" "Commit SHA reset success."; exit 0) || \
+  (log_message "ERROR" "Commit SHA mismatch after running pre-push tests."; exit 1)
