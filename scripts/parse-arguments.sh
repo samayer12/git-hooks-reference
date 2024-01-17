@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# TODO: Maybe this file can be deprecated
 # Default variable values
 verbose_mode=false
 output_file=""
