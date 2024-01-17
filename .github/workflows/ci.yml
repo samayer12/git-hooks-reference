@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+
+      - name: Install dependencies
+        run: yarn install --ignore-scripts
+
+      - name: Run tests
+        run: |
+          git --version
+          git config user.email "git-hooks-runner@some.place"
+          git config user.name "git-hooks-runner"
+          yarn install
+          cd test
+          ./run-all-tests.sh
+        env:
+          TERM: linux
+
+      - name: After script section
+        run: echo "After script section"
+
+      - name: Upload test logs
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-logs
+          path: test/logs/*.log

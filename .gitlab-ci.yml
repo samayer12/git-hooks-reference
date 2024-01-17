@@ -1,7 +1,10 @@
-image: busybox:latest
+image: node:latest
 
 stages:
   - test
+
+variables:
+  TERM: linux
 
 before_script:
   - yarn install --ignore-scripts
@@ -12,7 +15,7 @@ after_script:
 test:
   stage: test
   tags:
-    - gitlab-runner
+    - linux
   script:
     - git --version
     - git config user.email "git-hooks-runner@some.place"
