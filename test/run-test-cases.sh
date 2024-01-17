@@ -5,6 +5,7 @@ COUNT=0
 LOG_DIR="log-not-set"
 HOOK_NAME="hook-not-set"
 TEST_CASES="test-cases-not-set"
+SHOULD_FAIL=false
 
 # Function to display script usage
 usage() {
@@ -13,6 +14,7 @@ usage() {
   echo " -h, --help       Display this help message"
   echo " -v, --verbose    Enable verbose mode"
   echo " -d, --directory  Specify output directory for .log files"
+  echo " -f, -should-fail Consider failures successful, useful for testing 'sad path'"
   echo " -i, --input      Specify array of test cases for git hook under test"
   echo " -n, --hook-name  Specify name of git hook under test"
   echo " -p, --prefix     Specify prefix for .log file name"
@@ -49,6 +51,10 @@ handle_options() {
         HOOK_NAME=$(extract_argument "$@")
         shift
         ;;
+      -f | --should-fail)
+        SHOULD_FAIL=true
+        shift
+        ;;
       *)
         echo "Invalid option: $1" >&2
         usage
@@ -66,10 +72,20 @@ run_test_cases(){
   do
     RESULT=''
     # TODO: Handle "successful failure" cases for testing 'invalid' input
-    if ./callers/call-"$HOOK_NAME" -i "$TEST_CASE" > "logs/$HOOK_NAME-$COUNT-output.log" 2>&1; then
-      RESULT='PASS'
+    if $SHOULD_FAIL; then
+     # Sad Path
+     if ./callers/call-"$HOOK_NAME" -i "$TEST_CASE" > "logs/invalid-$HOOK_NAME-$COUNT-output.log" 2>&1; then
+        RESULT='FAIL'
+      else
+        RESULT='PASS'
+      fi
     else
-      RESULT='FAIL'
+     # Happy Path
+     if ./callers/call-"$HOOK_NAME" -i "$TEST_CASE" > "logs/$HOOK_NAME-$COUNT-output.log" 2>&1; then
+        RESULT='PASS'
+      else
+        RESULT='FAIL'
+      fi
     fi
 
     printf "CASE %d - %s - Input: '%s'\n" "$COUNT" "$RESULT" "$TEST_CASE"
