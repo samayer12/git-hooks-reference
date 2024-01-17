@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source ../scripts/parse-arguments.sh > test-pre-push.txt
+
+../hooks/pre-push
