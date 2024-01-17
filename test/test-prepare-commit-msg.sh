@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ../scripts/log-message.sh
+source ../hooks/utilities/log-message.sh
 
 # TODO: Stage a file that gets linted
 git checkout -b '123456789-test-branch-prepare-commit' 1>/dev/null 2>&1

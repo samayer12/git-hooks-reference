@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ../scripts/log-message.sh
+source ../hooks/utilities/log-message.sh
 
 rm test-report.log # Clear report file between runs
 

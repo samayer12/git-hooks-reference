@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ../scripts/log-message.sh
+source ../hooks/utilities/log-message.sh
 
 # Default variable values
 COUNT=0

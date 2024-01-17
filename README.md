@@ -12,6 +12,10 @@ We can test some of these scripts with bash.
 Execute this file from the `test/` directory.
 Otherwise, run the appropriate `test/test-*.sh` file for the hook you're working with.
 
+If you want ANSI color highlighting while viewing a `.log` file from IntelliJ, try the [ANSI Highlighter Premium](https://plugins.jetbrains.com/plugin/9707-ansi-highlighter-premium) plugin.
+This is a paid plugin with a trial period.
+Restart your IDE after installation if you choose to try it out.
+
 ## Description
 
 This project uses a set of test-fixtures to let you test changes to your git hooks with confidence.

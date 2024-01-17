@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ../scripts/log-message.sh
+source ../hooks/utilities/log-message.sh
 source ../scripts/parse-arguments.sh > test-pre-push.txt
 
 CURRENT_SHA="$(git rev-parse HEAD)"
