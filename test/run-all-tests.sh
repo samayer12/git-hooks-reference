@@ -2,7 +2,9 @@
 
 source ../hooks/utilities/log-message.sh
 
-rm test-report.log # Clear report file between runs
+TEST_REPORT_PATH="logs/test-report.log"
+
+rm $TEST_REPORT_PATH > /dev/null 2>&1 # Clear report file between runs
 
 log_message "INFORMATIONAL" "Starting test suite."
 
@@ -17,8 +19,8 @@ for TEST_FILE in test-*.sh; do
   bash "$TEST_FILE"
 done
 
-PASS_COUNT=$(grep -o -i "PASS" test-report.log | wc -l | tr -d ' ')
-FAIL_COUNT=$(grep -o -i "FAIL" test-report.log | wc -l | tr -d ' ')
+PASS_COUNT=$(grep -o -i "PASS" $TEST_REPORT_PATH | wc -l | tr -d ' ')
+FAIL_COUNT=$(grep -o -i "FAIL" $TEST_REPORT_PATH | wc -l | tr -d ' ')
 log_message "INFORMATIONAL" "Tests complete, $PASS_COUNT passed and $FAIL_COUNT failed."
 
 if [[ $FAIL_COUNT -gt $FAILURE_THRESHOLD ]]; then
