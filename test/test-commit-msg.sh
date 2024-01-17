@@ -1,40 +1,4 @@
 #!/usr/bin/env bash
 
-COUNT=0
-LOG_FILE_PREFIX='test-commit-msg-case'
-LOG_DIR='logs'
-
-run_test_cases(){
-  mkdir -p $LOG_DIR
-  declare -a TEST_CASES=("$@")
-  for TEST_CASE in "${!TEST_CASES[@]}";
-  do
-    RESULT=''
-    if ./callers/call-commit-msg -i "${TEST_CASES[TEST_CASE]}" > "logs/$LOG_FILE_PREFIX-$COUNT-output.log" 2>&1; then
-      RESULT='PASS'
-    else
-      RESULT='FAIL'
-    fi
-
-    printf "CASE %d - %s - Input: '%s'\n" "$COUNT" "$RESULT" "${TEST_CASES[TEST_CASE]}"
-    COUNT=$((COUNT+1))
-
-  done
-
-  rm test-*.txt # Remove temporary test files
-}
-
-
-declare -a VALID_COMMIT_MESSAGES=( \
-  '123: Test message 0' \
-  '456: Test message 1' \
-)
-
-declare -a INVALID_COMMIT_MESSAGES=( \
-  '123:' \
-  'no uppercase' \
-  'Invalid message 1' \
-)
-
-run_test_cases "${VALID_COMMIT_MESSAGES[@]}"
-run_test_cases "${INVALID_COMMIT_MESSAGES[@]}"
+./run-test-cases.sh --directory logs --input "input/valid-commit-msg.txt" --hook-name commit-msg
+./run-test-cases.sh --directory logs --input "input/invalid-commit-msg.txt" --hook-name commit-msg

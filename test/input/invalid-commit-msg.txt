@@ -1,0 +1,3 @@
+123:
+no uppercase
+Invalid message 1
