@@ -88,7 +88,7 @@ run_test_cases(){
       fi
     fi
 
-    printf "CASE %d - %s - Input: '%s'\n" "$COUNT" "$RESULT" "$TEST_CASE"
+    printf "%s - CASE %d - %s - Input: '%s'\n" "$HOOK_NAME" "$COUNT" "$RESULT" "$TEST_CASE"
     COUNT=$((COUNT+1))
   done < "$TEST_CASES"
 
